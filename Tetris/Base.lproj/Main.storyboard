@@ -24,6 +24,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="361" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrowtriangle.right.circle" catalog="system"/>
+                                        <connections>
+                                            <action selector="startButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="idT-uY-ShR"/>
+                                        </connections>
                                     </button>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1gZ-mK-Ggg">
                                         <rect key="frame" x="0.0" y="50.333333333333314" width="361" height="626.33333333333348"/>
@@ -52,21 +55,33 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="90.333333333333329" height="34.333333333333336"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="rotate.left" catalog="system"/>
+                                                <connections>
+                                                    <action selector="rotateButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gag-j2-Qou"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qb5-1N-SYB">
                                                 <rect key="frame" x="90.333333333333343" y="0.0" width="90.333333333333343" height="34.333333333333336"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="←"/>
+                                                <connections>
+                                                    <action selector="leftButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="n6Q-aY-fDM"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUt-sy-pBl">
                                                 <rect key="frame" x="180.66666666666666" y="0.0" width="89.999999999999972" height="34.333333333333336"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="↓"/>
+                                                <connections>
+                                                    <action selector="downButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="pjw-Xm-lwW"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AL3-Tu-yNw">
                                                 <rect key="frame" x="270.66666666666669" y="0.0" width="90.333333333333314" height="34.333333333333336"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="→"/>
+                                                <connections>
+                                                    <action selector="rightButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="0a9-iC-sPy"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
