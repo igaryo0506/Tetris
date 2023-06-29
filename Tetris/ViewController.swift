@@ -26,7 +26,11 @@ class ViewController: UIViewController {
     }
     @IBOutlet var startButton: UIButton!
     
-    var game: Game!
+    var game: Game! {
+        didSet {
+            game.delegate = self
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,5 +80,11 @@ extension ViewController: UICollectionViewDataSource {
         let gameCell = game.board[indexPath.row / WIDTH][indexPath.row % WIDTH]
         cell.backgroundColor = gameCell.color
         return cell
+    }
+}
+
+extension ViewController: GameDelegate {
+    func game(_ game: Game, boardUpdatedAt board: [[GameCell]]) {
+        collectionView.reloadData()
     }
 }

@@ -6,6 +6,11 @@
 //
 
 import UIKit
+
+protocol GameDelegate {
+    func game(_ game: Game, boardUpdatedAt board: [[GameCell]])
+}
+
 class Game {
     private let width: Int
     private let height: Int
@@ -13,6 +18,7 @@ class Game {
     
     // TODO: board to be private and state should be telled when state changed through delegate method
     var board: [[GameCell]]
+    var delegate: GameDelegate?
     private var currentMino: Mino?
 
     init(widthSize:Int, heightSize:Int){
@@ -29,8 +35,9 @@ class Game {
     }
     
     private func startRepeatingAction(){
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
-            self.printBoard()
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [self] _ in
+            delegate?.game(self, boardUpdatedAt: self.board)
+            // self.printBoard()
         })
     }
     
