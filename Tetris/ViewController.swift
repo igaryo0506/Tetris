@@ -24,6 +24,7 @@ class ViewController: UIViewController {
             collectionView.collectionViewLayout = layout
         }
     }
+    @IBOutlet var startButton: UIButton!
     
     var game: Game!
     
@@ -35,6 +36,8 @@ class ViewController: UIViewController {
     
     @IBAction func startButtonClicked() {
         print("startButton Clicked")
+        game.start()
+        startButton.isEnabled = false
     }
     
     @IBAction func rotateButtonClicked() {

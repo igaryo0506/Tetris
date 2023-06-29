@@ -99,6 +99,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="1gZ-mK-Ggg" id="xfm-Zx-tp9"/>
+                        <outlet property="startButton" destination="DZJ-zj-8TE" id="BzX-wJ-PHj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
