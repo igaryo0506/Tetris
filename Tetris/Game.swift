@@ -34,6 +34,13 @@ class Game {
         startRepeatingAction()
     }
     
+    func rotateMino(){
+        if currentMino != nil, checkCanRotate(mino: currentMino!){
+            currentMino?.rotate()
+            mergeBoard()
+        }
+    }
+    
     func downMino(){
         guard let mino = currentMino else { return }
         if checkStop(mino: mino, diff: (1,0)){
@@ -110,6 +117,28 @@ class Game {
         }
         return true
     }
+    
+    private func checkCanRotate(mino: Mino) -> Bool {
+        let newRotationState = (mino.rotationState + 1) % 4
+        let minoCellPositions = Mino.MINOPOSITIONS[mino.minoType.rawValue]![newRotationState]
+        for minoCellPosition in minoCellPositions {
+            let toMinoCellPosition = (mino.minoPosition.0 + minoCellPosition.0, mino.minoPosition.1 + minoCellPosition.1)
+            if toMinoCellPosition.0 >= height {
+                return false
+            }
+            if toMinoCellPosition.1 >= width {
+                return false
+            }
+            if toMinoCellPosition.1 < 0 {
+                return false
+            }
+            if board[toMinoCellPosition.0][toMinoCellPosition.1].minoType != nil {
+                return false
+            }
+        }
+        return true
+    }
+
     private func checkStop(mino: Mino, diff: (Int, Int)) -> Bool {
         if diff.0 != 1 {
             return false
@@ -174,32 +203,34 @@ enum MinoType: String, CaseIterable {
 struct Mino {
     var minoType: MinoType
     var minoPosition: (Int,Int)
+    var rotationState: Int
+    
+    static let MINOPOSITIONS: [String: [[(Int, Int)]]] = [
+        "i": [[(0,-1),(0,0),(0,1),(0,2)], [(0,1),(1,1),(2,1),(3,1)],[(0,-1),(0,0),(0,1),(0,2)], [(0,1),(1,1),(2,1),(3,1)]],
+        "o": [[(0,0),(0,1),(1,0),(1,1)], [(0,0),(0,1),(1,0),(1,1)], [(0,0),(0,1),(1,0),(1,1)],  [(0,0),(0,1),(1,0),(1,1)]],
+        "t": [[(0,-1),(0,0),(0,1),(1,0)], [(0,1),(1,0),(1,1),(2,1)], [(1,0),(2,-1),(2,0),(2,1)], [(0,-1),(1,-1),(1,0),(2,-1)]],
+        "s": [[(0,-1),(0,0),(1,0),(1,1)], [(0,1),(1,0),(1,1),(2,0)], [(0,-1),(0,0),(1,0),(1,1)], [(0,1),(1,0),(1,1),(2,0)]],
+        "z": [[(0,1),(0,0),(1,0),(1,-1)], [(0,0),(1,0),(1,1),(2,1)],
+              [(0,1),(0,0),(1,0),(1,-1)], [(0,0),(1,0),(1,1),(2,1)]],
+        "j": [[(0,0),(0,1),(0,2),(1,2)], [(0,2),(1,2),(2,2),(2,1)], [(1,0),(2,0),(2,1),(2,2)], [(0,0),(0,1),(1,0),(2,0)]],
+        "l": [[(0,0),(0,1),(0,2),(1,0)], [(0,1),(0,2),(1,2),(2,2)], [(1,2),(2,0),(2,1),(2,2)], [(0,0),(1,0),(2,0),(2,1)]]
+    ]
+    
     init(startPosition: (Int, Int)) {
         self.minoType = MinoType.allCases.randomElement()!
         self.minoPosition = startPosition
+        self.rotationState = 0
     }
     
     func getMinoCellPositions() -> [(Int, Int)] {
-        // TODO: add other pattern
-        switch minoType {
-        case .i:
-            return [(0,-1),(0,0),(0,1),(0,2)]
-        case .o:
-            return [(0,0),(0,1),(1,0),(1,1)]
-        case .t:
-            return [(0,-1),(0,0),(0,1),(1,0)]
-        case .s:
-            return [(0,-1),(0,0),(1,0),(1,1)]
-        case .z:
-            return [(0,0),(0,1),(1,-1),(1,0)]
-        case .j:
-            return [(0,0),(0,1),(0,2),(1,2)]
-        case .l:
-            return [(0,0),(0,1),(0,2),(1,0)]
-        }
+        Mino.MINOPOSITIONS[minoType.rawValue]![rotationState]
     }
     
     mutating func move(diff: (Int, Int)){
         minoPosition = (minoPosition.0 + diff.0, minoPosition.1 + diff.1)
+    }
+    
+    mutating func rotate() {
+        rotationState = (rotationState+1) % 4
     }
 }

@@ -48,6 +48,7 @@ class ViewController: UIViewController {
     
     @IBAction func rotateButtonClicked() {
         print("rotateButton Clicked")
+        game.rotateMino()
     }
     
     @IBAction func leftButtonClicked() {
