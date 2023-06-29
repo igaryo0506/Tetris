@@ -31,40 +31,64 @@ class Game {
     
     func start(){
         createNewBlock()
-        delegate?.game(self, boardUpdatedAt: board)
         startRepeatingAction()
     }
     
     func downMino(){
         guard let mino = currentMino else { return }
-        
-        if checkCanMove(mino: mino, diff: (1,0)) {
+        if checkStop(mino: mino, diff: (1,0)){
             let minoCellPositions = mino.getMinoCellPositions()
             for minoCellPosition in minoCellPositions {
-                board[mino.minoPosition.0 + minoCellPosition.0][mino.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: nil)
+                board[mino.minoPosition.0 + minoCellPosition.0][mino.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: mino.minoType)
             }
+            createNewBlock()
+            return
+        }
+        if checkCanMove(mino: mino, diff: (1,0)) {
             currentMino?.move(diff: (1,0))
-            for minoCellPosition in minoCellPositions {
-                board[currentMino!.minoPosition.0 + minoCellPosition.0][currentMino!.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: currentMino!.minoType)
-            }
+            mergeBoard()
+        }
+    }
+    
+    func leftMino(){
+        guard let mino = currentMino else { return }
+        if checkCanMove(mino: mino, diff: (0,-1)) {
+            currentMino?.move(diff: (0,-1))
+            mergeBoard()
+        }
+    }
+    
+    func rightMino(){
+        guard let mino = currentMino else { return }
+        if checkCanMove(mino: mino, diff: (0,1)) {
+            currentMino?.move(diff: (0,1))
+            mergeBoard()
         }
     }
     
     private func startRepeatingAction(){
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [self] _ in
             downMino()
-            delegate?.game(self, boardUpdatedAt: self.board)
-            // self.printBoard()
+            mergeBoard()
         })
     }
     
-    private func createNewBlock(){
-        currentMino = Mino(minoType: .o, startPosition: startPosition)
-        guard let currentMino else { return }
-        let minoCellPositions = currentMino.getMinoCellPositions()
-        for minoCellPosition in minoCellPositions {
-            board[currentMino.minoPosition.0 + minoCellPosition.0][currentMino.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: currentMino.minoType)
+    private func mergeBoard(){
+        if let currentMino {
+            var showingBoard = board
+            let minoCellPositions = currentMino.getMinoCellPositions()
+            for minoCellPosition in minoCellPositions {
+                showingBoard[currentMino.minoPosition.0 + minoCellPosition.0][currentMino.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: currentMino.minoType)
+            }
+            delegate?.game(self, boardUpdatedAt: showingBoard)
+        } else {
+            delegate?.game(self, boardUpdatedAt: self.board)
         }
+    }
+    
+    private func createNewBlock(){
+        currentMino = Mino(startPosition: startPosition)
+        mergeBoard()
     }
     
     private func checkCanMove(mino: Mino, diff: (Int, Int)) -> Bool {
@@ -80,14 +104,32 @@ class Game {
             if toMinoCellPosition.1 < 0 {
                 return false
             }
+            if board[toMinoCellPosition.0][toMinoCellPosition.1].minoType != nil {
+                return false
+            }
         }
         return true
     }
+    private func checkStop(mino: Mino, diff: (Int, Int)) -> Bool {
+        if diff.0 != 1 {
+            return false
+        }
+        let minoCellPositions = mino.getMinoCellPositions()
+        for minoCellPosition in minoCellPositions {
+            let toMinoCellPosition = (mino.minoPosition.0 + minoCellPosition.0 + diff.0, mino.minoPosition.1 + minoCellPosition.1 + diff.1)
+            if toMinoCellPosition.0 >= height {
+                return true
+            } else if board[toMinoCellPosition.0][toMinoCellPosition.1].minoType != nil {
+                return true
+            }
+        }
+        return false
+    }
     
-    private func printBoard() {
-        board.forEach{ line in
+    private func printBoard(printedBoard: [[GameCell]]) {
+        printedBoard.forEach{ line in
             print(line.map{
-                return $0.minoType?.rawValue ?? -1
+                return $0.minoType?.rawValue ?? " "
             })
         }
     }
@@ -119,22 +161,21 @@ struct GameCell {
     }
 }
 
-enum MinoType: Int {
-    case i = 0
-    case o = 1
-    case t = 2
-    case s = 3
-    case z = 4
-    case j = 5
-    case l = 6
+enum MinoType: String, CaseIterable {
+    case i = "i"
+    case o = "o"
+    case t = "t"
+    case s = "s"
+    case z = "z"
+    case j = "j"
+    case l = "l"
 }
 
 struct Mino {
     var minoType: MinoType
     var minoPosition: (Int,Int)
-    
-    init(minoType: MinoType, startPosition: (Int, Int)) {
-        self.minoType = minoType
+    init(startPosition: (Int, Int)) {
+        self.minoType = MinoType.allCases.randomElement()!
         self.minoPosition = startPosition
     }
     
@@ -142,22 +183,20 @@ struct Mino {
         // TODO: add other pattern
         switch minoType {
         case .i:
-            break
+            return [(0,-1),(0,0),(0,1),(0,2)]
         case .o:
-            break
+            return [(0,0),(0,1),(1,0),(1,1)]
         case .t:
-            break
+            return [(0,-1),(0,0),(0,1),(1,0)]
         case .s:
-            break
+            return [(0,-1),(0,0),(1,0),(1,1)]
         case .z:
-            break
+            return [(0,0),(0,1),(1,-1),(1,0)]
         case .j:
-            break
+            return [(0,0),(0,1),(0,2),(1,2)]
         case .l:
-            break
+            return [(0,0),(0,1),(0,2),(1,0)]
         }
-        // case o
-        return [(0,0),(0,1),(1,0),(1,1)]
     }
     
     mutating func move(diff: (Int, Int)){

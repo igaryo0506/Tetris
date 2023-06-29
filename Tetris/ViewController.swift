@@ -8,7 +8,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
     let WIDTH = 10
     let HEIGHT = 15
 
@@ -29,8 +28,11 @@ class ViewController: UIViewController {
     var game: Game! {
         didSet {
             game.delegate = self
+            self.board = game.board
         }
     }
+    
+    var board:[[GameCell]]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,16 +52,18 @@ class ViewController: UIViewController {
     
     @IBAction func leftButtonClicked() {
         print("leftButton Clicked")
+        game.leftMino()
         
     }
     
     @IBAction func downButtonClicked() {
         print("downButton Clicked")
-        
+        game.downMino()
     }
     
     @IBAction func rightButtonClicked() {
         print("rightButton Clicked")
+        game.rightMino()
         
     }
 }
@@ -77,7 +81,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         
-        let gameCell = game.board[indexPath.row / WIDTH][indexPath.row % WIDTH]
+        let gameCell = board[indexPath.row / WIDTH][indexPath.row % WIDTH]
         cell.backgroundColor = gameCell.color
         return cell
     }
@@ -85,6 +89,7 @@ extension ViewController: UICollectionViewDataSource {
 
 extension ViewController: GameDelegate {
     func game(_ game: Game, boardUpdatedAt board: [[GameCell]]) {
+        self.board = board
         collectionView.reloadData()
     }
 }
