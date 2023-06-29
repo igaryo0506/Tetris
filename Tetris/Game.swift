@@ -30,12 +30,29 @@ class Game {
     }
     
     func start(){
-        startRepeatingAction()
         createNewBlock()
+        delegate?.game(self, boardUpdatedAt: board)
+        startRepeatingAction()
+    }
+    
+    func downMino(){
+        guard let mino = currentMino else { return }
+        
+        if checkCanMove(mino: mino, diff: (1,0)) {
+            let minoCellPositions = mino.getMinoCellPositions()
+            for minoCellPosition in minoCellPositions {
+                board[mino.minoPosition.0 + minoCellPosition.0][mino.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: nil)
+            }
+            currentMino?.move(diff: (1,0))
+            for minoCellPosition in minoCellPositions {
+                board[currentMino!.minoPosition.0 + minoCellPosition.0][currentMino!.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: currentMino!.minoType)
+            }
+        }
     }
     
     private func startRepeatingAction(){
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [self] _ in
+            downMino()
             delegate?.game(self, boardUpdatedAt: self.board)
             // self.printBoard()
         })
@@ -44,10 +61,27 @@ class Game {
     private func createNewBlock(){
         currentMino = Mino(minoType: .o, startPosition: startPosition)
         guard let currentMino else { return }
-        let minoShape = currentMino.getMinoShape()
-        for gameCellPosition in minoShape {
-            board[currentMino.minoPosition.0 + gameCellPosition.0][currentMino.minoPosition.1 + gameCellPosition.1] = GameCell(minoType: currentMino.minoType)
+        let minoCellPositions = currentMino.getMinoCellPositions()
+        for minoCellPosition in minoCellPositions {
+            board[currentMino.minoPosition.0 + minoCellPosition.0][currentMino.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: currentMino.minoType)
         }
+    }
+    
+    private func checkCanMove(mino: Mino, diff: (Int, Int)) -> Bool {
+        let minoCellPositions = mino.getMinoCellPositions()
+        for minoCellPosition in minoCellPositions {
+            let toMinoCellPosition = (mino.minoPosition.0 + minoCellPosition.0 + diff.0, mino.minoPosition.1 + minoCellPosition.1 + diff.1)
+            if toMinoCellPosition.0 >= height {
+                return false
+            }
+            if toMinoCellPosition.1 >= width {
+                return false
+            }
+            if toMinoCellPosition.1 < 0 {
+                return false
+            }
+        }
+        return true
     }
     
     private func printBoard() {
@@ -104,7 +138,7 @@ struct Mino {
         self.minoPosition = startPosition
     }
     
-    func getMinoShape() -> [(Int, Int)] {
+    func getMinoCellPositions() -> [(Int, Int)] {
         // TODO: add other pattern
         switch minoType {
         case .i:
@@ -124,5 +158,9 @@ struct Mino {
         }
         // case o
         return [(0,0),(0,1),(1,0),(1,1)]
+    }
+    
+    mutating func move(diff: (Int, Int)){
+        minoPosition = (minoPosition.0 + diff.0, minoPosition.1 + diff.1)
     }
 }
