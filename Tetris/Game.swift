@@ -48,12 +48,29 @@ class Game {
             for minoCellPosition in minoCellPositions {
                 board[mino.minoPosition.0 + minoCellPosition.0][mino.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: mino.minoType)
             }
+            deleteLine()
             createNewBlock()
             return
         }
         if checkCanMove(mino: mino, diff: (1,0)) {
             currentMino?.move(diff: (1,0))
             mergeBoard()
+        }
+    }
+    
+    func deleteLine() {
+        for (index,line) in board.enumerated() {
+            var isAllExist = true
+            for cell in line {
+                if cell.minoType == nil {
+                    isAllExist = false
+                }
+            }
+            if isAllExist {
+                board.remove(at: index)
+                board = [[GameCell](repeating: GameCell(minoType: nil), count: line.count)] + board
+                mergeBoard()
+            }
         }
     }
     
