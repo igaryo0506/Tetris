@@ -17,88 +17,98 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="GAL-S8-fNA">
-                                <rect key="frame" x="16" y="75" width="361" height="727"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZJ-zj-8TE">
+                                <rect key="frame" x="16" y="75" width="361" height="34.333333333333343"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrowtriangle.right.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="startButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="idT-uY-ShR"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1gZ-mK-Ggg">
+                                <rect key="frame" x="16" y="125.33333333333331" width="361" height="569.66666666666674"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="RdS-oz-Adm">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="jxN-6p-cCU">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Kwj-lB-CCz">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Gl1-tc-TaV">
+                                <rect key="frame" x="16" y="767.66666666666663" width="361" height="34.333333333333371"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZJ-zj-8TE">
-                                        <rect key="frame" x="0.0" y="0.0" width="361" height="34.333333333333336"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W8q-Hk-cUD">
+                                        <rect key="frame" x="0.0" y="0.0" width="90.333333333333329" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="arrowtriangle.right.circle" catalog="system"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="rotate.left" catalog="system"/>
                                         <connections>
-                                            <action selector="startButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="idT-uY-ShR"/>
+                                            <action selector="rotateButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gag-j2-Qou"/>
                                         </connections>
                                     </button>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1gZ-mK-Ggg">
-                                        <rect key="frame" x="0.0" y="50.333333333333314" width="361" height="626.33333333333348"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="RdS-oz-Adm">
-                                            <size key="itemSize" width="128" height="128"/>
-                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        </collectionViewFlowLayout>
-                                        <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="jxN-6p-cCU">
-                                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Kwj-lB-CCz">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </collectionViewCellContentView>
-                                            </collectionViewCell>
-                                        </cells>
-                                    </collectionView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Gl1-tc-TaV">
-                                        <rect key="frame" x="0.0" y="692.66666666666663" width="361" height="34.333333333333371"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W8q-Hk-cUD">
-                                                <rect key="frame" x="0.0" y="0.0" width="90.333333333333329" height="34.333333333333336"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="rotate.left" catalog="system"/>
-                                                <connections>
-                                                    <action selector="rotateButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gag-j2-Qou"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qb5-1N-SYB">
-                                                <rect key="frame" x="90.333333333333343" y="0.0" width="90.333333333333343" height="34.333333333333336"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="←"/>
-                                                <connections>
-                                                    <action selector="leftButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="n6Q-aY-fDM"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUt-sy-pBl">
-                                                <rect key="frame" x="180.66666666666666" y="0.0" width="89.999999999999972" height="34.333333333333336"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="↓"/>
-                                                <connections>
-                                                    <action selector="downButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="pjw-Xm-lwW"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AL3-Tu-yNw">
-                                                <rect key="frame" x="270.66666666666669" y="0.0" width="90.333333333333314" height="34.333333333333336"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="→"/>
-                                                <connections>
-                                                    <action selector="rightButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="0a9-iC-sPy"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qb5-1N-SYB">
+                                        <rect key="frame" x="90.333333333333343" y="0.0" width="90.333333333333343" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="←"/>
+                                        <connections>
+                                            <action selector="leftButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="n6Q-aY-fDM"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUt-sy-pBl">
+                                        <rect key="frame" x="180.66666666666666" y="0.0" width="89.999999999999972" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="↓"/>
+                                        <connections>
+                                            <action selector="downButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="pjw-Xm-lwW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AL3-Tu-yNw">
+                                        <rect key="frame" x="270.66666666666669" y="0.0" width="90.333333333333314" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="→"/>
+                                        <connections>
+                                            <action selector="rightButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="0a9-iC-sPy"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Over" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ksk-tW-KTf">
+                                <rect key="frame" x="114" y="711" width="165" height="40.666666666666629"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GAL-S8-fNA" secondAttribute="bottom" constant="16" id="Euc-H5-b4X"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GAL-S8-fNA" secondAttribute="trailing" constant="16" id="d0a-yt-yeU"/>
-                            <constraint firstItem="GAL-S8-fNA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="lVs-OO-xuw"/>
-                            <constraint firstItem="GAL-S8-fNA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="xDY-G1-j7H"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Gl1-tc-TaV" secondAttribute="trailing" constant="16" id="4rw-GA-HLU"/>
+                            <constraint firstItem="ksk-tW-KTf" firstAttribute="top" secondItem="1gZ-mK-Ggg" secondAttribute="bottom" constant="16" id="7Ev-ib-ciW"/>
+                            <constraint firstItem="DZJ-zj-8TE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="Dhj-yc-JRZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1gZ-mK-Ggg" secondAttribute="trailing" constant="16" id="LeE-ko-VjR"/>
+                            <constraint firstItem="ksk-tW-KTf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="RzX-Ce-CKf"/>
+                            <constraint firstItem="1gZ-mK-Ggg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="UMw-QY-gOW"/>
+                            <constraint firstItem="1gZ-mK-Ggg" firstAttribute="top" secondItem="DZJ-zj-8TE" secondAttribute="bottom" constant="16" id="baj-L8-jnj"/>
+                            <constraint firstItem="DZJ-zj-8TE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bnh-9I-W39"/>
+                            <constraint firstItem="Gl1-tc-TaV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="cHG-Zo-MdK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DZJ-zj-8TE" secondAttribute="trailing" constant="16" id="eh7-VZ-289"/>
+                            <constraint firstItem="Gl1-tc-TaV" firstAttribute="top" secondItem="ksk-tW-KTf" secondAttribute="bottom" constant="16" id="knc-jf-edJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Gl1-tc-TaV" secondAttribute="bottom" constant="16" id="wAp-pC-gPQ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="1gZ-mK-Ggg" id="xfm-Zx-tp9"/>
+                        <outlet property="gameOverLabel" destination="ksk-tW-KTf" id="85C-5u-DQc"/>
                         <outlet property="startButton" destination="DZJ-zj-8TE" id="BzX-wJ-PHj"/>
                     </connections>
                 </viewController>

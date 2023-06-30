@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         }
     }
     @IBOutlet var startButton: UIButton!
+    @IBOutlet var gameOverLabel: UILabel!
     
     var game: Game! {
         didSet {
@@ -89,8 +90,13 @@ extension ViewController: UICollectionViewDataSource {
 }
 
 extension ViewController: GameDelegate {
-    func game(_ game: Game, boardUpdatedAt board: [[GameCell]]) {
+    func boardUpdated(_ game: Game, board: [[GameCell]]) {
         self.board = board
         collectionView.reloadData()
+    }
+    
+    func gameOver(_ game: Game) {
+        gameOverLabel.isHidden = false
+        startButton.isEnabled = true
     }
 }

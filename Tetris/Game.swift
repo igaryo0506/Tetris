@@ -8,7 +8,8 @@
 import UIKit
 
 protocol GameDelegate {
-    func game(_ game: Game, boardUpdatedAt board: [[GameCell]])
+    func boardUpdated(_ game: Game, board: [[GameCell]])
+    func gameOver(_ game: Game)
 }
 
 class Game {
@@ -20,16 +21,24 @@ class Game {
     var board: [[GameCell]]
     var delegate: GameDelegate?
     private var currentMino: Mino?
+    private var gameOverCells: [(Int,Int)]
+    private var timer: Timer?
 
     init(widthSize:Int, heightSize:Int){
         self.width = widthSize
         self.height = heightSize
         self.board = [[GameCell]](repeating: [GameCell](repeating: GameCell(minoType: nil), count: widthSize), count: heightSize)
         self.startPosition = (0, (widthSize + 1) / 2 - 1)
+        self.gameOverCells = [
+            (startPosition.0, startPosition.1),
+            (startPosition.0, startPosition.1 + 1),
+            (startPosition.0 + 1, startPosition.1),
+            (startPosition.0 + 1, startPosition.1 + 1),]
         currentMino = nil
     }
     
     func start(){
+        initializeBoard()
         createNewBlock()
         startRepeatingAction()
     }
@@ -49,6 +58,12 @@ class Game {
                 board[mino.minoPosition.0 + minoCellPosition.0][mino.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: mino.minoType)
             }
             deleteLine()
+            for gameOverCell in gameOverCells {
+                if board[gameOverCell.0][gameOverCell.1].minoType != nil{
+                    gameOver()
+                    return
+                }
+            }
             createNewBlock()
             return
         }
@@ -58,7 +73,16 @@ class Game {
         }
     }
     
-    func deleteLine() {
+    private func initializeBoard() {
+        board = [[GameCell]](repeating: [GameCell](repeating: GameCell(minoType: nil), count: width), count: height)
+    }
+    
+    private func gameOver(){
+        timer?.invalidate()
+        delegate?.gameOver(self)
+    }
+    
+    private func deleteLine() {
         for (index,line) in board.enumerated() {
             var isAllExist = true
             for cell in line {
@@ -91,23 +115,21 @@ class Game {
     }
     
     private func startRepeatingAction(){
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [self] _ in
             downMino()
             mergeBoard()
         })
     }
     
     private func mergeBoard(){
+        var showingBoard = board
         if let currentMino {
-            var showingBoard = board
             let minoCellPositions = currentMino.getMinoCellPositions()
             for minoCellPosition in minoCellPositions {
                 showingBoard[currentMino.minoPosition.0 + minoCellPosition.0][currentMino.minoPosition.1 + minoCellPosition.1] = GameCell(minoType: currentMino.minoType)
             }
-            delegate?.game(self, boardUpdatedAt: showingBoard)
-        } else {
-            delegate?.game(self, boardUpdatedAt: self.board)
         }
+        delegate?.boardUpdated(self, board: showingBoard)
     }
     
     private func createNewBlock(){
